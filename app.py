@@ -28,51 +28,53 @@ def recommend(movie):
 
         return recommended_movie_names,recommended_movie_posters
 
+
 movies_dict = pickle.load(open('./models/movies_dict.pkl', 'rb'))
 movies = pd.DataFrame(movies_dict)
 # similarity = pickle.load(open('./models/similarity.pkl.gz', 'rb'))
 with gzip.open('./models/similarity.pkl.gz', 'rb') as f:
     similarity = pickle.load(f)
-
-title_container = st.container()
-col1, col2 = st.columns([1, 11])
-image = Image.open('./images/NagPhoto.jpg')
-with title_container:
-    with col1:
-        st.image(image, caption='Nagesh', width=60)
-    with col2:
-        st.title("Movie Recommender System :sunglasses:")
-
-
-selected_movies_name = st.selectbox(
-    'Type or select a movie from the dropdown which will predict the next recommend movies to see',
-    movies['title'].values)
+def main():
+    title_container = st.container()
+    col1, col2 = st.columns([1, 11])
+    image = Image.open('./images/NagPhoto.jpg')
+    with title_container:
+        with col1:
+            st.image(image, caption='Nagesh', width=60)
+        with col2:
+            st.title("Movie Recommender System :sunglasses:")
 
 
-if st.button("Recommend to see next movies"):
-    recommended_movie_names, recommended_movie_posters = recommend(selected_movies_name)
-    col1, col2, col3, col4, col5, col6 = st.columns(6)
-    with col1:
-        st.text(recommended_movie_names[0])
-        st.image(recommended_movie_posters[0])
-    with col2:
-        st.text(recommended_movie_names[1])
-        st.image(recommended_movie_posters[1])
+    selected_movies_name = st.selectbox(
+        'Type or select a movie from the dropdown which will predict the next recommend movies to see',
+        movies['title'].values)
 
-    with col3:
-        st.text(recommended_movie_names[2])
-        st.image(recommended_movie_posters[2])
-    with col4:
-        st.text(recommended_movie_names[3])
-        st.image(recommended_movie_posters[3])
-    with col5:
-        st.text(recommended_movie_names[4])
-        st.image(recommended_movie_posters[4])
 
-    with col6:
-        st.text(recommended_movie_names[5])
-        st.image(recommended_movie_posters[5])
+    if st.button("Recommend to see next movies"):
+        recommended_movie_names, recommended_movie_posters = recommend(selected_movies_name)
+        col1, col2, col3, col4, col5, col6 = st.columns(6)
+        with col1:
+            st.text(recommended_movie_names[0])
+            st.image(recommended_movie_posters[0])
+        with col2:
+            st.text(recommended_movie_names[1])
+            st.image(recommended_movie_posters[1])
 
-        
+        with col3:
+            st.text(recommended_movie_names[2])
+            st.image(recommended_movie_posters[2])
+        with col4:
+            st.text(recommended_movie_names[3])
+            st.image(recommended_movie_posters[3])
+        with col5:
+            st.text(recommended_movie_names[4])
+            st.image(recommended_movie_posters[4])
 
+        with col6:
+            st.text(recommended_movie_names[5])
+            st.image(recommended_movie_posters[5])
+
+
+if __name__=='__main__':
+    main()
 
